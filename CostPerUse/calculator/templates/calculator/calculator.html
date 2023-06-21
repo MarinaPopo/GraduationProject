@@ -1,0 +1,17 @@
+{% extends 'calculator/base.html' %}
+{% block content %}
+
+ <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+        <div>
+            <label for="formInput#text">{{ field.label }} </label>
+                {{ field }}
+            </div>
+    {% endfor %}
+
+
+    <input type="submit" value="Рассчитать" />
+</form>
+<!--<h1>Будет стоить {{ cost_per_use }} за раз.</h1>-->
+{% endblock %}
