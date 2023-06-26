@@ -1,17 +1,27 @@
 {% extends 'calculator/base.html' %}
+{% load static %}
 {% block content %}
 
- <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% for field in form %}
-        <div>
-            <label for="formInput#text">{{ field.label }} </label>
-                {{ field }}
+<main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper" align="center">
+                <a class="backButton" href="#"><img src="{% static 'images/left.png' %}" alt="left"></a>
+                <br>
+
+                <form class="form" method="POST" >
+                    <!-- Input:Text -->
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form__field">
+                        <label for="formInput#text">{{ field.label }} </label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Рассчитать" />
+                </form>
             </div>
-    {% endfor %}
+        </div>
+    </main>
 
-
-    <input type="submit" value="Рассчитать" />
-</form>
-<!--<h1>Будет стоить {{ cost_per_use }} за раз.</h1>-->
 {% endblock %}
