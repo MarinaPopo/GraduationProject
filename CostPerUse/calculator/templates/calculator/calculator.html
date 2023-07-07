@@ -5,12 +5,10 @@
 <main class="formPage my-xl">
         <div class="content-box">
             <div class="formWrapper" align="center">
-                <a class="backButton" href="#"><img src="{% static 'images/left.png' %}" alt="left"></a>
-                <br>
 
-                <form class="form" method="POST" >
+                <form class="form" >
                     <!-- Input:Text -->
-                    {% csrf_token %}
+<!--                    {% csrf_token %}-->
                     {% for field in form %}
                     <div class="form__field">
                         <label for="formInput#text">{{ field.label }} </label>
@@ -20,6 +18,9 @@
 
                     <input class="btn btn--sub btn--lg  my-md" type="submit" value="Рассчитать" />
                 </form>
+            <div>Вы используете {{ product }}</div>
+            <div>{{ times }} {{ variant }} и потратите</div>
+            <div>{{ cost_per_use }} руб. за использование</div>
             </div>
         </div>
     </main>
