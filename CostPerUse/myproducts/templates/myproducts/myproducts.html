@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}{{ title }}{% endblock %}
 {% block css %}
-<!--<link href="{% static 'css/products.css' %}" rel="stylesheet">{% endblock %}-->
+<link href="{% static 'css/products.css' %}" rel="stylesheet">{% endblock %}
 {% block content %}
 
 <!-- Page Content -->
@@ -35,15 +35,14 @@
                                  alt="">
                         </a>
                         <div class="card-body">
-                            <h4 class="card-title">
-                                <h2>{{ product.name }}</h2>
-                            </h4>
-                            <h5>{{ product.price }} руб.</h5>
+                            <h4 class="card-title">{{ product.name }}</h4>
+                            <h5 class="price">{{ product.price }}</h5>
                             <p class="card-text">{{ product.description }}</p>
-                            <p class="card-text">Стоимость использования: </p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
+                            <h1 class="counter-display">(..)</h1>
+                            <button class="counter-minus">-</button>
+                            <button class="counter-plus">+</button>
+
+                            <p class="card-text cpu">(..)</p>
                         </div>
                     </div>
                 </div>
@@ -57,7 +56,7 @@
                     {% if products.has_previous %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ products.previous_page_number }}" tabindex="-1"
-                           aria-disabled="true">Предыдущая</a>
+                           aria-disabled="true">Назад</a>
                     </li>
                     {% endif %}
 
@@ -71,7 +70,7 @@
 
                     {% if products.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ products.next_page_number }}">Следуюшая</a>
+                        <a class="page-link" href="?page={{ products.next_page_number }}">Далее</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -93,15 +92,7 @@
     <!-- /.container -->
 </footer>
 
-
-
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- FontAwesome script -->
-<script src="vendor/fontawesome/fontawesome-icons.js" crossorigin="anonymous"></script>
-
+<script src="{% static 'js/counter.js' %}"></script>
 
 {% endblock %}
 

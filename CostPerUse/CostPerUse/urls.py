@@ -23,9 +23,10 @@ from myproducts import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('calculator.urls')),
-    # path('myproducts/', include('myproducts.urls')),
     path('products/', views.my_products, name='my_products'),
     path('products/<int:category_id>/', views.my_products, name='category'),
+    path('products/create-category/', views.create_category, name='create_category'),
+    path('products/create-product/', views.create_product, name='create_product'),
 
 ]
 
