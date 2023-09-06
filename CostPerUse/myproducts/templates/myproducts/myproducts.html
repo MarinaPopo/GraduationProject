@@ -1,5 +1,6 @@
 {% extends 'calculator/base.html' %}
 {% load static %}
+{% load mathfilters %}
 {% block title %}{{ title }}{% endblock %}
 {% block css %}
 <link href="{% static 'css/products.css' %}" rel="stylesheet">{% endblock %}
@@ -36,13 +37,26 @@
                         </a>
                         <div class="card-body">
                             <h4 class="card-title">{{ product.name }}</h4>
-                            <h5 class="price">{{ product.price }}</h5>
                             <p class="card-text">{{ product.description }}</p>
-                            <h1 class="counter-display">(..)</h1>
-                            <button class="counter-minus">-</button>
-                            <button class="counter-plus">+</button>
-
-                            <p class="card-text cpu">(..)</p>
+                            <h5 class="price">Стоимость использования:</h5>
+                            <h5 class="price">{{ product.times }}</h5>
+                            <h5 class="price">{{ product.price }}</h5>
+                            {% if product.times >= 1 %}
+                            <h5 class="price">{{ product.price |div:product.times }}</h5>
+                            {% endif %}
+                            <span class="text-muted">
+                            <a href="{% url 'plus_use' product.id %}"
+                               style="text-decoration: none; color: gray;">
+                                <i class="fas fa-cart-plus">+</i>
+                            </a>
+                             <a href="{% url 'minus_use' product.id %}"
+                               style="text-decoration: none; color: gray;">
+                                <i class="fas fa-minus-square">-</i>
+                            </a>
+                            <a href="{% url 'delete_product' product.id %}" style="text-decoration: none; color: gray;">
+                                <i class="far fa-trash-alt">Удалить</i>
+                            </a>
+                        </span>
                         </div>
                     </div>
                 </div>

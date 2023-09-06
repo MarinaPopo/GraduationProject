@@ -59,4 +59,34 @@ def create_product(request):
     return render(request, 'myproducts/create-product.html', context)
 
 
+# @login_required(login_url='users/login/')
+def plus_use(request, product_id):
+    current_page = request.META.get('HTTP_REFERER')
+    product = Product.objects.get(id=product_id)
+    product.times += 1
+    product.save()
+    return redirect(current_page)
+
+
+def minus_use(request, product_id):
+    current_page = request.META.get('HTTP_REFERER')
+    product = Product.objects.get(id=product_id)
+    if product.times > 1:
+        product.times -= 1
+        product.save()
+    else:
+        product.times = 0
+        product.save()
+    return redirect(current_page)
+
+
+def delete_product(request, product_id):
+    product = Product.objects.get(id=product_id)
+    product.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def delete_category(request, category_id):
+    category = Category.objects.get(id=category_id)
+    category.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
 
