@@ -17,6 +17,7 @@
                     {% endfor %}
 
                     <input class="btn btn--sub btn--lg  my-md" type="submit" value="Рассчитать" />
+                    <a href="{% url 'calculator' %}">Сбросить</a>
                 </form>
             <div>Вы используете {{ product }}</div>
             <div>{{ times }} {{ variant }} и потратите</div>

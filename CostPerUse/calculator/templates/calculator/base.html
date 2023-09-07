@@ -3,8 +3,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+<!--    <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}">-->
+<!--    <link rel="stylesheet" href="{% static 'styles/style.css' %}">-->
+     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
     </head>
 <body>
 {% if user.is_authenticated %}
@@ -39,5 +41,11 @@
 <!--<div class="content">-->
 <!--  <div class="wrap">-->
 {% block content %}{% endblock %}
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- FontAwesome script -->
+<script src="{% static 'vendor/fontawesome/fontawesome-icons.js' %}" crossorigin="anonymous"></script>
+
 </body>
 </html>

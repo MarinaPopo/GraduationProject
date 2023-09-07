@@ -13,11 +13,14 @@ def my_products(request, category_id=None):
     context = {
         'title': 'Мои покупки',
         'categories': Category.objects.all(),
-        }
+    }
+
     if category_id:
         products = Product.objects.filter(category_id=category_id)
+
     else:
         products = Product.objects.all()
+
     paginator = Paginator(products, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -65,7 +68,13 @@ def plus_use(request, product_id):
     product = Product.objects.get(id=product_id)
     product.times += 1
     product.save()
-    return redirect(current_page)
+    # variant = None
+    if product.times % 10 == 2 or product.times % 10 == 3 or product.times % 10 == 4:
+        variant = 'раза'
+    else:
+        variant = 'раз'
+    context = {'variant': variant}
+    return redirect(current_page, context)
 
 
 def minus_use(request, product_id):
@@ -85,8 +94,8 @@ def delete_product(request, product_id):
     product.delete()
     return redirect(request.META.get('HTTP_REFERER'))
 
+
 def delete_category(request, category_id):
     category = Category.objects.get(id=category_id)
     category.delete()
     return redirect(request.META.get('HTTP_REFERER'))
-

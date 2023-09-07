@@ -23,7 +23,9 @@ def calculator(request):
         one = morph.parse(product)[0]
         product = one.inflect({'accs'}).word
 
-    if times % 10 == 2 or times % 10 == 3 or times % 10 == 4:
+    if times == 12 or times == 13 or times == 14:
+        variant = 'раз'
+    elif times % 10 == 2 or times % 10 == 3 or times % 10 == 4:
         variant = 'раза'
     else:
         variant = 'раз'

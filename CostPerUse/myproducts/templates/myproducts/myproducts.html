@@ -3,6 +3,7 @@
 {% load mathfilters %}
 {% block title %}{{ title }}{% endblock %}
 {% block css %}
+
 <link href="{% static 'css/products.css' %}" rel="stylesheet">{% endblock %}
 {% block content %}
 
@@ -38,23 +39,36 @@
                         <div class="card-body">
                             <h4 class="card-title">{{ product.name }}</h4>
                             <p class="card-text">{{ product.description }}</p>
-                            <h5 class="price">Стоимость использования:</h5>
-                            <h5 class="price">{{ product.times }}</h5>
-                            <h5 class="price">{{ product.price }}</h5>
+                            <p class="card-text">Цена: {{ product.price }}</p>
                             {% if product.times >= 1 %}
-                            <h5 class="price">{{ product.price |div:product.times }}</h5>
+                            <h5 class="price">{{ product.price |div:product.times |floatformat:2 }} руб. за раз</h5>
                             {% endif %}
+                            <h5 class="price">{{ product.times }}
+                            {% with modulo=product.times|mod:10 %}
+                                {% if product.times == 12 or product.times == 13 or product.times == 14 %}
+                                    раз
+                                {% elif modulo == 2 or modulo == 3 or modulo == 4 %}
+                                    раза
+                                {% else %}
+                                    раз
+                                {% endif %}
+                            {% endwith %}
+                            </h5>
+
+
                             <span class="text-muted">
                             <a href="{% url 'plus_use' product.id %}"
                                style="text-decoration: none; color: gray;">
-                                <i class="fas fa-cart-plus">+</i>
+                                <i class="fas fa-plus-square"></i>
                             </a>
                              <a href="{% url 'minus_use' product.id %}"
                                style="text-decoration: none; color: gray;">
-                                <i class="fas fa-minus-square">-</i>
+                                <i class="fas fa-minus-square"></i>
                             </a>
+                                <br>
+                                <br>
                             <a href="{% url 'delete_product' product.id %}" style="text-decoration: none; color: gray;">
-                                <i class="far fa-trash-alt">Удалить</i>
+                                <i class="far fa-trash-alt"></i>
                             </a>
                         </span>
                         </div>
@@ -106,7 +120,13 @@
     <!-- /.container -->
 </footer>
 
-<script src="{% static 'js/counter.js' %}"></script>
+<!--<script src="{% static 'js/counter.js' %}"></script>-->
 
 {% endblock %}
+
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- FontAwesome script -->
+<script src="{% static 'vendor/fontawesome/fontawesome-icons.js' %}" crossorigin="anonymous"></script>
 
