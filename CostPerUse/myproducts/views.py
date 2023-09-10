@@ -9,17 +9,19 @@ from django.core.paginator import Paginator
 from .forms import CategoryForm, ProductForm
 
 
+@login_required(login_url='/')
 def my_products(request, category_id=None):
+    user = request.user
     context = {
         'title': 'Мои покупки',
-        'categories': Category.objects.all(),
+        'categories': Category.objects.filter(user=user),
     }
 
     if category_id:
-        products = Product.objects.filter(category_id=category_id)
+        products = Product.objects.filter(category_id=category_id, user=user)
 
     else:
-        products = Product.objects.all()
+        products = Product.objects.filter(user=user)
 
     paginator = Paginator(products, 3)
     page_number = request.GET.get('page')
@@ -28,16 +30,16 @@ def my_products(request, category_id=None):
     return render(request, 'myproducts/myproducts.html', context)
 
 
-@login_required(login_url="login")
+@login_required(login_url="/")
 def create_category(request):
-    # profile = request.user.profile
+    user = request.user
     form = CategoryForm()
 
     if request.method == 'POST':
         form = CategoryForm(request.POST, request.FILES)
         if form.is_valid():
-            project = form.save(commit=False)
-            # project.owner = profile
+            category = form.save(commit=False)
+            category.user = user
             form.save()
             return redirect('my_products')
 
@@ -45,16 +47,16 @@ def create_category(request):
     return render(request, 'myproducts/create-category.html', context)
 
 
-@login_required(login_url="login")
+@login_required(login_url="login/")
 def create_product(request):
-    # profile = request.user.profile
+    user = request.user
     form = ProductForm()
 
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            project = form.save(commit=False)
-            # project.owner = profile
+            product = form.save(commit=False)
+            product.user = user
             form.save()
             return redirect('my_products')
 
@@ -62,13 +64,12 @@ def create_product(request):
     return render(request, 'myproducts/create-product.html', context)
 
 
-# @login_required(login_url='users/login/')
+@login_required(login_url='/')
 def plus_use(request, product_id):
     current_page = request.META.get('HTTP_REFERER')
     product = Product.objects.get(id=product_id)
     product.times += 1
     product.save()
-    # variant = None
     if product.times % 10 == 2 or product.times % 10 == 3 or product.times % 10 == 4:
         variant = 'раза'
     else:
@@ -77,6 +78,7 @@ def plus_use(request, product_id):
     return redirect(current_page, context)
 
 
+@login_required(login_url='/')
 def minus_use(request, product_id):
     current_page = request.META.get('HTTP_REFERER')
     product = Product.objects.get(id=product_id)
@@ -89,12 +91,14 @@ def minus_use(request, product_id):
     return redirect(current_page)
 
 
+@login_required(login_url='/')
 def delete_product(request, product_id):
     product = Product.objects.get(id=product_id)
     product.delete()
     return redirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required(login_url='/')
 def delete_category(request, category_id):
     category = Category.objects.get(id=category_id)
     category.delete()

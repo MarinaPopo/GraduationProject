@@ -1,12 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class Category(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, unique=True, verbose_name='Категория')
     description = models.TextField(blank=True, verbose_name='Описание категории')
 
     def __str__(self):
         return self.name
-
 
     class Meta:
         verbose_name = 'категорию'
@@ -14,6 +16,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=256, verbose_name='Название')
     image = models.ImageField(upload_to='products_images/', blank=True, verbose_name='Изображение')
     description = models.CharField(max_length=250, blank=True, verbose_name='Описание')
@@ -23,7 +26,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
 
     class Meta:
         verbose_name = 'товар'
