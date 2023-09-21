@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, widgets, DateField
 from django import forms
 from .models import Category, Product
 
@@ -19,10 +19,11 @@ class CategoryForm(ModelForm):
 class ProductForm(ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'image', 'description', 'price', 'category']
-        # widgets = {
-        #     'category': forms.CheckboxSelectMultiple(),
-        # }
+        fields = ['name', 'image', 'description', 'price', 'category', 'date_created']
+        widgets = {
+            'date_created': widgets.DateInput(attrs={'type': 'date'})
+        }
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

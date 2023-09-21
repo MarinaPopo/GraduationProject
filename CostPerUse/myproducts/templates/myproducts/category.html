@@ -1,8 +1,10 @@
 <div class="list-group">
     <a href="{% url 'my_products' %}" class="list-group-item">Все категории</a>
     {% for category in categories %}
-    <a href="{% url 'category' category.id %}" class="list-group-item">{{ category.name }}</a>
-    <a href="{% url 'delete_category' category.id %}"><i>X</i></a>
+    <div class="list-group-item">
+    <a href="{% url 'category' category.id %}" >{{ category.name }}</a>
+    <a href="{% url 'delete_category' category.id %}"><i class="far fa-trash-alt"></i></a>
+    </div>
     {% endfor %}
     <a href="{% url 'create_category' %}" class="list-group-item">Создать категорию</a>
     <a href="{% url 'create_product' %}" class="list-group-item">Добавить товар</a>

@@ -94,12 +94,16 @@ def minus_use(request, product_id):
 @login_required(login_url='/')
 def delete_product(request, product_id):
     product = Product.objects.get(id=product_id)
-    product.delete()
-    return redirect(request.META.get('HTTP_REFERER'))
+    if request.method == 'POST':
+        product.delete()
+        return redirect('my_products')
+    return render(request, 'myproducts/delete-product.html', {'product': product})
 
 
 @login_required(login_url='/')
 def delete_category(request, category_id):
     category = Category.objects.get(id=category_id)
-    category.delete()
-    return redirect(request.META.get('HTTP_REFERER'))
+    if request.method == 'POST':
+        category.delete()
+        return redirect('my_products')
+    return render(request, 'myproducts/delete-category.html', {'category': category})

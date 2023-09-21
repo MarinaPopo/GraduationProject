@@ -36,6 +36,7 @@ def calculator(request):
         'product': product,
         'times': times,
         'variant': variant,
+        'title': 'Калькулятор'
     }
     return render(request, 'calculator/calculator.html', context)
 
