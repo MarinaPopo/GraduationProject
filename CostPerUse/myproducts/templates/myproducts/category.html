@@ -6,6 +6,8 @@
     <a href="{% url 'delete_category' category.id %}"><i class="far fa-trash-alt"></i></a>
     </div>
     {% endfor %}
+
+    <a href="{% url 'archive' %}" class="list-group-item">Архив</a>
     <a href="{% url 'create_category' %}" class="list-group-item">Создать категорию</a>
     <a href="{% url 'create_product' %}" class="list-group-item">Добавить товар</a>
 </div>

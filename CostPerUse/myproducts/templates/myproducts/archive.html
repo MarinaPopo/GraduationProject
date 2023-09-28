@@ -30,7 +30,7 @@
 
             <div class="row">
                 {% for product in products %}
-                {% if product.is_archived == False %}
+                {% if product.is_archived %}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
                         <a href="{% url 'product' product.id %}">
@@ -41,13 +41,14 @@
                             {% endif %}
                         </a>
                         <div class="card-body">
-                            <a href="{% url 'product' product.id %}">{{ product.name }}</a>
+                            <p class="card-text">{{ product.name }}</p>
                             <p class="card-text">{{ product.description }}</p>
-
+                            <p class="card-text">Цена: {{ product.price }}</p>
+                            <p class="card-text">Дата покупки: {{ product.date_created|date:'d.m.Y'}}</p>
                             {% if product.times >= 1 %}
                             <h5 class="price">{{ product.price |div:product.times |floatformat:2 }} руб. за раз</h5>
                             {% endif %}
-                            <p class="price">{{ product.times }}
+                            <h5 class="price">{{ product.times }}
                             {% with modulo=product.times|mod:10 %}
                                 {% if product.times == 12 or product.times == 13 or product.times == 14 %}
                                     раз
@@ -57,35 +58,16 @@
                                     раз
                                 {% endif %}
                             {% endwith %}
-                            </>
+                            </h5>
 
 
-<!--                            <span class="text-muted">-->
-                            <a href="{% url 'plus_use' product.id %}"
-                               style="text-decoration: none; color: gray;">
-                                <i class="fas fa-plus-square"></i>
-                            </a>
-                             <a href="{% url 'minus_use' product.id %}"
-                               style="text-decoration: none; color: gray;">
-                                <i class="fas fa-minus-square"></i>
-                            </a>
-                            <br>
-                            <p class="card-text">{{ product.price }} руб.</p>
-                            <p class="card-text">{{ product.date_created|date:'d.m.Y'}}</p>
 
-                                <br>
                             <a href="{% url 'delete_product' product.id %}" style="text-decoration: none; color: gray;">
                                 <i class="far fa-trash-alt"></i>
                             </a>
-                            <a href="{% url 'product' product.id %}" style="text-decoration: none; color: gray;">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-                            <a href="{% url 'add_to_archive' product.id %}"
-                               style="text-decoration: none; color: gray;">
-                                <i class="fa fa-archive" aria-hidden="true"></i>
-                            </a>
-
-<!--                        </span>-->
+                            <br>
+                            <a href="{% url 'restore_from_archive' product.id %}">Восстановить из
+                                архива</a>
                         </div>
                     </div>
                 </div>

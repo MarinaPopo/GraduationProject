@@ -6,6 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 import pymorphy3
+from myproducts.views import my_products
 
 
 def calculator(request):
@@ -61,7 +62,7 @@ def signupuser(request):
 
 @login_required
 def logoutuser(request):
-    if request.method == 'POST':
+    # if request.method == 'POST':
         logout(request)
         return redirect('calculator')
 
@@ -76,4 +77,4 @@ def loginuser(request):
                           {'error': 'Неверные данные'})
         else:
             login(request, user)
-            return redirect('calculator')
+            return redirect('my_products')
