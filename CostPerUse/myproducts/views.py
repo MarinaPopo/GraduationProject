@@ -1,8 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
-from django.contrib.auth import login, logout, authenticate
-from django.db import IntegrityError
+
 from django.contrib.auth.decorators import login_required
 from .models import Category, Product
 from django.core.paginator import Paginator
@@ -18,12 +15,13 @@ def my_products(request, category_id=None):
     }
 
     if category_id:
-        products = Product.objects.filter(category_id=category_id, user=user)
+        products = Product.objects.filter(category_id=category_id, user=user, is_archived=False)
 
     else:
-        products = Product.objects.filter(user=user)
+        products = Product.objects.filter(user=user, is_archived=False)
 
-    paginator = Paginator(products, 9)
+
+    paginator = Paginator(products, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context.update({'products': page_obj})
@@ -36,7 +34,7 @@ def archive(request):
         'title': 'Архив',
         'categories': Category.objects.filter(user=user),
     }
-    products = Product.objects.filter(user=user)
+    products = Product.objects.filter(user=user, is_archived=True)
 
     paginator = Paginator(products, 12)
     page_number = request.GET.get('page')
@@ -58,7 +56,7 @@ def create_category(request):
             form.save()
             return redirect('my_products')
 
-    context = {'form': form}
+    context = {'form': form, 'title': 'Создать категорию'}
     return render(request, 'myproducts/create-category.html', context)
 
 
@@ -76,7 +74,7 @@ def create_product(request):
             form.save()
             return redirect('my_products')
 
-    context = {'form': form, 'categories': categories}
+    context = {'form': form, 'categories': categories, 'title': 'Добавить товар'}
     return render(request, 'myproducts/create-product.html', context)
 
 
@@ -98,12 +96,10 @@ def plus_use(request, product_id):
 def minus_use(request, product_id):
     current_page = request.META.get('HTTP_REFERER')
     product = Product.objects.get(id=product_id)
-    if product.times > 1:
+    if product.times >= 1:
         product.times -= 1
         product.save()
-    else:
-        product.times = 0
-        product.save()
+
     return redirect(current_page)
 
 

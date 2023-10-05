@@ -19,7 +19,7 @@ class ProductForm(ModelForm):
         model = Product
         fields = ['name', 'image', 'description', 'price', 'category', 'date_created']
         widgets = {
-            'date_created': widgets.DateInput(attrs={'type': 'date'})
+            'date_created': widgets.DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
         }
 
     # def __init__(self, *args, **kwargs):

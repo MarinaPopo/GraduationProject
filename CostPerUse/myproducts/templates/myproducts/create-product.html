@@ -1,12 +1,13 @@
 {% extends 'calculator/base.html' %}
 {% load static %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
 <div class="card shadow-lg border-0 rounded-lg mt-5">
     <div class="card-header"><h3 class="text-center font-weight-light my-4">Добавить товар</h3>
     </div>
     <div class="card-body">
-        <form action="{% url 'create_product' %}" method="post">
+        <form action="{% url 'create_product' %}" method="post" enctype="multipart/form-data">
             <form class="form" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                 <div class="form-group">
@@ -24,26 +25,5 @@
             </div>
                 </form>
     <!-- Main Section -->
-<!--    <main class="formPage my-xl">-->
-<!--        <div class="content-box">-->
-<!--            <div class="formWrapper">-->
 
-<!--                <br>-->
-
-<!--                <form class="form" method="POST" enctype="multipart/form-data">-->
-<!--                    {% csrf_token %}-->
-<!--                    {% for field in form %}-->
-<!--                    &lt;!&ndash; Input:Text &ndash;&gt;-->
-<!--                    <div class="form__field">-->
-<!--                        <label for="formInput#text">{{ field.label }} </label>-->
-<!--                        {{ field }}-->
-<!--                    </div>-->
-<!--                    {% endfor %}-->
-
-
-<!--                    <input class="btn btn&#45;&#45;sub btn&#45;&#45;lg  my-md" type="submit" value="Добавить" />-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </main>-->
 {% endblock %}

@@ -24,7 +24,7 @@ def calculator(request):
         one = morph.parse(product)[0]
         product = one.inflect({'accs'}).word
 
-    if times == 12 or times == 13 or times == 14:
+    if times % 100 == 12 or times % 100 == 13 or times % 100 == 14:
         variant = 'раз'
     elif times % 10 == 2 or times % 10 == 3 or times % 10 == 4:
         variant = 'раза'
@@ -62,9 +62,8 @@ def signupuser(request):
 
 @login_required
 def logoutuser(request):
-    # if request.method == 'POST':
-        logout(request)
-        return redirect('calculator')
+    logout(request)
+    return redirect('calculator')
 
 
 def loginuser(request):

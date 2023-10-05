@@ -31,5 +31,6 @@ class Product(models.Model):
         return self.name
 
     class Meta:
+        ordering = ['date_created', 'is_archived']
         verbose_name = 'товар'
         verbose_name_plural = 'Товары'
